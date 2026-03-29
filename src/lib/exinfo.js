@@ -1,0 +1,80 @@
+export const EX_INFO = {
+  'Bulgarian split squat': {
+    how: 'Stand facing away from a bench. Place your rear foot on it, laces down. Step your front foot forward far enough that your shin stays vertical at the bottom. Lower until your rear knee hovers just above the floor. Drive through your front heel to stand.',
+    cue: 'Think tall chest, sink the back knee straight down — not forward. If your front knee is drifting past your toe, step further forward.',
+    trains: 'Single-leg quad and glute strength. Because tennis is almost entirely single-leg — every split step, every push-off, every recovery — this directly builds the power and stability you use on every single shot.',
+    injury: ['Front knee caving inward — reduce weight and focus on driving the knee out over your second toe.','Lower back rounding — your front foot is too close. Step further forward.','Rear knee pain — place a folded towel under the rear knee, or elevate the rear foot less.'],
+  },
+  'Lateral bound + stick': {
+    how: 'Stand on one foot. Explosively push off laterally, bounding to the other foot. Land softly on a single foot and hold the landing for 2 full seconds before the next rep.',
+    cue: 'Land like you are trying to make no sound. Soft knee, hip hinging slightly, chest up. If you are wobbling on landing, the weight is too far forward.',
+    trains: 'Lateral power and landing stability — the exact movement pattern of recovering from a wide forehand. The 2-second hold builds the single-leg stability that prevents ankle and knee injuries under fatigue.',
+    injury: ['Knee collapsing on landing — reduce distance until you can land clean.','Ankle rolling — always land with foot pointing forward, never laterally rotated.'],
+  },
+  'Romanian deadlift (single-leg)': {
+    how: 'Stand on one leg with a slight bend in the knee. Hinge at the hip, sending your free leg back as a counterbalance while your torso tips forward. Lower until you feel a strong stretch in the standing hamstring. Drive the hip forward to stand.',
+    cue: 'Think push the floor away rather than stand up. Your hip drives forward, your chest comes up as a result. Keep the spine neutral throughout.',
+    trains: 'Single-leg hamstring strength and hip stability. The hamstring is the primary brake for your knee on every deceleration — stopping for a split step, changing direction.',
+    injury: ['Lower back rounding — stop at parallel or slightly above.','Standing knee hyperextending — keep a soft bend throughout, never lock the knee.'],
+  },
+  'Cossack squat': {
+    how: 'Stand with feet wider than shoulder width. Shift your weight onto one leg and squat down into it, letting the other leg straighten completely with toes pointing up. Your squatting heel stays flat on the floor.',
+    cue: 'The straight leg is as important as the squatting leg. Point that foot to the ceiling and feel the adductor stretch. If your heel comes off the floor, widen your stance.',
+    trains: 'Lateral hip mobility and adductor flexibility — directly addresses the hip range limitation behind your cross-court forehand big-step problem.',
+    injury: ['Squatting heel lifting — widen your stance.','Knee pain on the squatting side — ensure your knee tracks over your second toe.'],
+  },
+  'Band lateral walk': {
+    how: 'Place a resistance band just above your knees. Stand with feet hip-width apart, slight bend in knees. Step sideways maintaining tension in the band throughout — never let your feet come together.',
+    cue: 'Keep your hips level the whole time — no side-to-side sway. The glute med is firing when your hip stays locked level.',
+    trains: 'Glute medius — the small muscle on the outside of your hip that stabilises your pelvis during single-leg movements. Weak glute med is the root cause of knee valgus and IT band issues in tennis.',
+    injury: ['Hip hiking or swaying — slow down and focus on keeping hips level.','Band too heavy causing compensation — go lighter, this is an activation exercise.'],
+  },
+  'Box jump (reactive)': {
+    how: 'Stand facing a sturdy box. Dip slightly, swing your arms, and jump onto the box landing softly with both feet simultaneously. Step — do not jump — back down. Reset fully before the next rep.',
+    cue: 'Land like a ninja — quiet feet, soft knees, slight forward lean. Each rep is maximal — if you are not fully recovered, you are not training the right system.',
+    trains: 'Alactic power — the ATP-PC energy system that powers your split step and first explosive step to the ball.',
+    injury: ['Jumping down instead of stepping — the landing impact is unnecessary and hard on knees.','Fatigued reps — stop the set when jump height noticeably drops.'],
+  },
+  'Forearm pronation curl': {
+    how: 'Sit with your forearm resting on a bench, palm facing up, holding a light dumbbell. Slowly rotate your forearm until your palm faces down. Hold 1 second at the bottom, then return slowly. Keep the elbow fixed.',
+    cue: 'Imagine turning a doorknob from locked to unlocked. The movement comes entirely from the forearm — your elbow and shoulder should be completely still.',
+    trains: 'Pronator teres and pronator quadratus — the two muscles that execute serve pronation. This is the direct strength exercise for the snap through the ball at contact.',
+    injury: ['Elbow pain — you are gripping too hard or using too much weight.','Wrist pain — ensure the wrist is neutral, not bent.'],
+  },
+  'Motorcycle revs': {
+    how: 'Hold a light dumbbell in each hand, arms hanging straight down. Flex your wrists upward like revving a motorcycle throttle, hold 1 second, then slowly lower back down.',
+    cue: 'Feel the burn on the underside of your forearms, not the top. If you feel it on top, you are reversing the direction.',
+    trains: 'Wrist flexors and underside forearm — the muscles that fire through ball contact on both groundstrokes and the serve.',
+    injury: ['Sharp wrist pain — stop immediately, this should be a burning fatigue feeling not sharp pain.','Using momentum — slow down, each rep should take 3–4 seconds total.'],
+  },
+  'Supination-to-pronation (band)': {
+    how: 'Anchor a light resistance band at waist height. Hold the band with your arm extended, palm up. Rotate your forearm to palm down against the band resistance, then return slowly. Keep your elbow at your side.',
+    cue: 'The eccentric return from palm down back to palm up is as important as the concentric. Control it over 3 seconds.',
+    trains: 'The full forearm rotation range — specifically the eccentric supination that loads like a spring before the explosive pronation through contact.',
+    injury: ['Elbow flaring out — keep it pinned to your side.','Rotating from the shoulder — this should be pure forearm rotation.'],
+  },
+  'Med ball rotational slam': {
+    how: 'Stand sideways with feet shoulder-width apart. Hold a med ball at hip height on the back side. Rotate powerfully through your hips, transferring the ball to the front side and slam it into the floor. Catch and reset fully before the next rep.',
+    cue: 'The power comes from your hips rotating, not your arms pushing. Think hip drives first, arms follow.',
+    trains: 'Hip-led rotational power — the same kinetic chain as your forehand. This converts your gym strength into tennis-specific power.',
+    injury: ['Lower back strain — keep your spine tall and let the hips do the rotating.','Using too heavy a ball — you should be able to complete the full rotation at speed.'],
+  },
+  'Face pulls (cable)': {
+    how: 'Set a cable at upper chest height with a rope attachment. Pull the rope toward your face, driving your elbows wide and high. Finish with your thumbs pointing behind your ears. Return slowly.',
+    cue: 'Think elbows high and wide, thumbs to ears. The finish position matters more than the pull.',
+    trains: 'Posterior rotator cuff, rear deltoid, and lower traps — the muscles that decelerate your arm after ball contact. This is your primary injury prevention exercise.',
+    injury: ['Neck strain — the rope should pull toward your face, not your neck.','Shrugging the shoulders — if your shoulders rise, the weight is too heavy.'],
+  },
+  'Single-arm cable row': {
+    how: 'Set a cable at chest height. Stand facing the machine with a slight stagger in your stance. Pull the cable handle toward your lower rib, driving your elbow back and keeping it close to your body.',
+    cue: 'Think elbow to back pocket. The elbow leads, the hand follows. Feel your shoulder blade retract fully at the end.',
+    trains: 'Scapular retraction, lat engagement, and rotational stability — keeps your shoulder blade stable when you rotate hard through the ball.',
+    injury: ['Twisting too aggressively — a small amount of rotation is fine but if your whole torso turns, reduce the weight.','Elbow flaring wide — keep it close to your body.'],
+  },
+  'Wrist roller': {
+    how: 'Hold a wrist roller at arm length in front of you. Alternate wrist extensions to wind the cord up, bringing the weight to the roller. Then reverse to unwind. That is one full cycle.',
+    cue: 'Arms stay parallel to the floor throughout — no dropping the elbows. If your arms start dropping, you have found your training weight.',
+    trains: 'Forearm endurance — the muscular stamina that keeps your grip and pronation functioning at the same quality in the third game as in the first.',
+    injury: ['Sharp elbow pain — stop, this can aggravate tennis elbow if you have an existing issue.','Arms dropping below parallel — this shifts stress to the shoulder.'],
+  },
+};
