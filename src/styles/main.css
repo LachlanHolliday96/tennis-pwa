@@ -312,18 +312,31 @@ body{
 
 /* TOAST */
 #toast{position:fixed;bottom:calc(var(--safe-bot) + var(--tab-h) + 12px);left:50%;transform:translateX(-50%);background:#2a2a35;border:1px solid var(--a2);border-radius:10px;padding:9px 16px;font-family:'DM Mono',monospace;font-size:.72rem;color:var(--a2);z-index:500;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap}
-/* REST TIMER */    
-.wl-timer-sticky{
-  position:sticky;
-  top:0;
-  z-index:20;
-  margin:0 0 8px 0;
-  border-radius:0;
-  border-left:none;
-  border-right:none;
-  border-top:none;
-  background:#1a1a1e;
+
+/* REST TIMER OVERLAY — fixed to screen, above everything */
+.wl-timer-overlay{
+  position:fixed;
+  bottom:calc(var(--safe-bot) + var(--tab-h) + 12px);
+  left:16px;
+  right:16px;
+  z-index:600;
+  background:#1e1e22;
+  border:1px solid rgba(90,245,200,.35);
+  border-radius:14px;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.8);
+  animation:timerSlideUp .2s ease;
 }
+@keyframes timerSlideUp{
+  from{transform:translateY(20px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
+/* REST TIMER */
+
 .wl-timer-ring{flex-shrink:0;transform:rotate(-90deg)}
 .wl-timer-ring-bg{fill:none;stroke:#222226;stroke-width:3}
 .wl-timer-ring-fill{fill:none;stroke:var(--a2);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .9s linear}

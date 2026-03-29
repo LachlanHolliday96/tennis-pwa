@@ -244,9 +244,7 @@ function renderWeekView(){
     const dt = getDate(schedWeek, d);
     const isToday = dt.getTime() === td.getTime();
     const slots = splitSlots(sched[schedWeek][d]).filter(Boolean);
-    if(!slots.length && !isToday) continue;
-    const hasContent = slots.length > 0;
-    if(!hasContent && !isToday) continue;
+    // Always show all 7 days
     html += `<div class="sday${isToday?' today-row':''}" data-w="${schedWeek}" data-d="${d}">
       <div class="sd-left">
         <div class="sd-dow">${fmtDow(dt)}</div>
@@ -1175,22 +1173,18 @@ function buildLoggerHTML(sessionKey){
   return html;
 }
 function removeTimerUI(){
-  const existing = document.getElementById('wl-rest-timer');
-  if(existing) existing.remove();
+  document.querySelectorAll('#wl-rest-timer').forEach(el => el.remove());
 }
 
 function startRestTimerInLogger(exName, sessionKey){
   removeTimerUI();
-  const body = document.getElementById('drawer-body');
-  if(!body) return;
-
   const duration = getRestDuration(exName);
   const R = 16, C = 2 * Math.PI * R;
 
-  // Insert timer UI at top of drawer body
+  // Attach timer to sheet element so it stays visible while scrolling
   const timerEl = document.createElement('div');
   timerEl.id = 'wl-rest-timer';
-  timerEl.className = 'wl-timer wl-timer-sticky';
+  timerEl.className = 'wl-timer-overlay';
   timerEl.innerHTML = `
     <svg class="wl-timer-ring" width="40" height="40" viewBox="0 0 40 40">
       <circle class="wl-timer-ring-bg" cx="20" cy="20" r="${R}"/>
@@ -1202,11 +1196,7 @@ function startRestTimerInLogger(exName, sessionKey){
       <div class="wl-timer-count" id="timer-count">${duration}s</div>
     </div>
     <button class="wl-timer-dismiss" id="timer-dismiss">Skip</button>`;
-
-  // Insert after the wl-header
-  const header = body.querySelector('.wl-header');
-  if(header) header.after(timerEl);
-  else body.prepend(timerEl);
+  document.body.appendChild(timerEl);
 
   document.getElementById('timer-dismiss').onclick = () => {
     stopRestTimer();
@@ -1332,20 +1322,19 @@ function openAddExerciseToLogger(sessionKey){
   const grid = document.createElement('div');
   grid.className = 'ex-pick-grid';
   grid.style.cssText = 'display:flex;flex-direction:column;gap:6px;margin-bottom:1rem';
-  const allExercises = [...GYM_A, ...GYM_B];
-  allExercises.forEach(ex => {
-    const lib = EXERCISE_LIBRARY[ex.id];
-    const name = lib ? lib.name : (ex.n || ex.id || '');
-    const sets = ex.s || '';
-    const alreadyAdded = wlState[sessionKey]?.[name];
+  const current = Object.keys(wlState[sessionKey] || {});
+  Object.entries(EXERCISE_LIBRARY).forEach(([id, lib]) => {
+    const name = lib.name;
+    const sets = lib.defaultSets || '';
+    const alreadyAdded = current.includes(name);
     const row = document.createElement('div');
     const borderColor = alreadyAdded ? 'var(--accent)' : 'var(--border)';
     row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid ' + borderColor + ';border-radius:10px;cursor:pointer';
     row.innerHTML = '<div style="flex:1"><div style="font-size:.82rem;font-weight:700">' + name + '</div><div style="font-family:DM Mono,monospace;font-size:.62rem;color:var(--muted)">' + sets + '</div></div><div style="font-family:DM Mono,monospace;font-size:.65rem;color:' + (alreadyAdded ? 'var(--accent)' : 'var(--soft)') + '">' + (alreadyAdded ? 'Added' : '+ Add') + '</div>';
-    if(alreadyAdded === undefined || alreadyAdded === null || alreadyAdded === false){
+    if(!alreadyAdded){
       row.onclick = () => {
         const parsedSets = parseDefaultSets(sets);
-        wlState[sessionKey][name] = {sets: parsedSets, prev:null, exDef:{n:name, s:sets}};
+        wlState[sessionKey][name] = {sets: parsedSets, prev:null, exDef:{n:name, s:sets, id:id}};
         document.getElementById('edit-bg').classList.remove('open');
         const body = document.getElementById('drawer-body');
         if(body){ body.innerHTML = buildLoggerHTML(sessionKey); body.classList.add('open'); attachLoggerEvents(sessionKey); }
@@ -1384,37 +1373,31 @@ function openSwapExerciseInLogger(sessionKey){
     };
     grid.appendChild(row);
   });
-  const available = [...GYM_A, ...GYM_B].filter(ex => {
-    const lib = EXERCISE_LIBRARY[ex.id];
-    const name = lib ? lib.name : (ex.n || ex.id || '');
-    return current.indexOf(name) === -1;
+  const addLabel = document.createElement('div');
+  addLabel.style.cssText = 'font-family:DM Mono,monospace;font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px';
+  addLabel.textContent = 'Available to add';
+  grid.appendChild(addLabel);
+  Object.entries(EXERCISE_LIBRARY).forEach(([id, lib]) => {
+    const name = lib.name;
+    if(current.includes(name)) return;
+    const sets = lib.defaultSets || '';
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer';
+    row.innerHTML = '<div style="flex:1"><div style="font-size:.82rem;font-weight:700">' + name + '</div><div style="font-family:DM Mono,monospace;font-size:.62rem;color:var(--muted)">' + sets + '</div></div><div style="font-family:DM Mono,monospace;font-size:.65rem;color:var(--soft)">+ Add</div>';
+    row.onclick = () => {
+      const parsedSets = parseDefaultSets(sets);
+      wlState[sessionKey][name] = {sets: parsedSets, prev:null, exDef:{n:name, s:sets, id:id}};
+      document.getElementById('edit-bg').classList.remove('open');
+      const body = document.getElementById('drawer-body');
+      if(body){ body.innerHTML = buildLoggerHTML(sessionKey); body.classList.add('open'); attachLoggerEvents(sessionKey); }
+      showToast(name + ' added');
+    };
+    grid.appendChild(row);
   });
-  if(available.length){
-    const addLabel = document.createElement('div');
-    addLabel.style.cssText = 'font-family:DM Mono,monospace;font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px';
-    addLabel.textContent = 'Available to add';
-    grid.appendChild(addLabel);
-    available.forEach(ex => {
-      const lib = EXERCISE_LIBRARY[ex.id];
-      const name = lib ? lib.name : (ex.n || ex.id || '');
-      const sets = ex.s || '';
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer';
-      row.innerHTML = '<div style="flex:1"><div style="font-size:.82rem;font-weight:700">' + name + '</div><div style="font-family:DM Mono,monospace;font-size:.62rem;color:var(--muted)">' + sets + '</div></div><div style="font-family:DM Mono,monospace;font-size:.65rem;color:var(--soft)">+ Add</div>';
-      row.onclick = () => {
-        const parsedSets = parseDefaultSets(sets);
-        wlState[sessionKey][name] = {sets: parsedSets, prev:null, exDef:{n:name, s:sets}};
-        document.getElementById('edit-bg').classList.remove('open');
-        const body = document.getElementById('drawer-body');
-        if(body){ body.innerHTML = buildLoggerHTML(sessionKey); body.classList.add('open'); attachLoggerEvents(sessionKey); }
-        showToast(name + ' added');
-      };
-      grid.appendChild(row);
-    });
-  }
   modalInner.appendChild(grid);
   modal.classList.add('open');
 }
+
 
 // Patch toggleDrawer to attach events after build
 const _origToggleDrawer = toggleDrawer;
